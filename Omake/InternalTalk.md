@@ -120,6 +120,6 @@ Aipra
 
 ### 24 Aug 08:59
 acr:
-> > @Aipra: Omake下Internaltalk.md 为内部讨论版,Manual.md为给用户的帮助文件,Todolist.md如名称所示,rule.md从内容来看应为Manual下内容,请修改==
-> [DOS時代的STG遺珠：《Tyrian》](https://zhuanlan.zhihu.com/p/164821901)
-> 在胡博士那翻来了个不错的文章，打算改下游戏系统,但问题是现在进度太慢,对目前影响为零==
+> > @Aipra: Omake下Internaltalk.md 为内部讨论版,Manual.md为给用户的帮助文件,Todolist.md如名称所示,rule.md从内容来看应为Manual下内容,请修改==  
+> [DOS時代的STG遺珠：《Tyrian》](https://zhuanlan.zhihu.com/p/164821901)  
+> 在胡博士那翻来了个不错的文章，打算改下游戏系统,但问题是现在进度太慢,对目前影响为零==  
