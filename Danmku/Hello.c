@@ -11,9 +11,8 @@
 
 
 #include <stdio.h>
-#include <SDL_image.h>
-#include <SDL.h>
-int main (int argc,char*argv[])
+int main (void)
 {
-    SDL_Init ()
+    printf("Hello world!");
+    return 0;
 }
