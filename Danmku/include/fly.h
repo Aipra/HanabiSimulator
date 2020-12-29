@@ -13,9 +13,8 @@ extern struct player {
 	SDL_Rect rect_back[3][8];//3为左右运动，8为8种状态
 	SDL_Texture* er;//人物造型，外部转Texture用
 }player;
-
-#define speed_x 3
-#define speed_y 5
+#define speed_x 10
+#define speed_y 10
 #ifdef __cplusplus
 extern "C"{
 #endif//__cplusplus

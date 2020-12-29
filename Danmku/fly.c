@@ -6,6 +6,7 @@
 
 //定义人物的图片地址
 char* player_image[100] = { "./res/a1.png","./res/a2.png","./res/a3.png" };
+static move_i, move_j;//设置动画用
 
 struct player fly_player_init(struct SDL_Renderer* rend) {
 
@@ -42,24 +43,27 @@ struct player fly_player_init(struct SDL_Renderer* rend) {
 //控制人物及子弹的运动
 void fly_player_update(struct SDL_Renderer* rend,union SDL_Event event,struct player *p) {//平面和事件
     move_player(p,event);
-
     SDL_RenderClear(rend);
-    SDL_RenderCopy(rend, p->er, &(p->rect_back[0][0]), &(p->rect_player));//静止
+    SDL_RenderCopy(rend, p->er, &(p->rect_back[move_j][move_i]), &(p->rect_player));//静止
     SDL_RenderPresent(rend);//贴上去
     SDL_Delay(3);
 }
 
 
-void move_player(struct player *p,union SDL_Event event) {
+void move_player(struct player* p, union SDL_Event event) {
     if (event.type == SDL_KEYDOWN)
         switch (event.key.keysym.sym) {
-        case'w':if (p->rect_player.y >= 0) { p->rect_player.y -= speed_y; } break;
-        case'a':if (p->rect_player.x >= 0) { p->rect_player.x -= speed_x; }break;
-        case's':if (p->rect_player.y <= window_hight) { p->rect_player.y += speed_y; }break;
-        case'd':if (p->rect_player.x <= window_width) { p->rect_player.x += speed_x; }break;
-        case SDLK_UP:if (p->rect_player.y >= 0) { p->rect_player.y -= speed_y; }break;
-        case SDLK_LEFT:if (p->rect_player.x >= 0) { p->rect_player.x -= speed_x; }break;
-        case SDLK_DOWN:if (p->rect_player.y <= window_hight) { p->rect_player.y += speed_y; }break;
-        case SDLK_RIGHT:if (p->rect_player.x <= window_width) { p->rect_player.x += speed_x; }break;
+        case'w':if (p->rect_player.y >= 0) { p->rect_player.y -= speed_y;} move_j = 0; move_i = 5; break;
+        case'a':if (p->rect_player.x >= 0) { p->rect_player.x -= speed_x; } move_j = 1; move_i = 5;break;
+        case's':if (p->rect_player.y <= window_hight - p->rect_player.h) { p->rect_player.y += speed_y; }  move_j = 0; move_i = 5;break;
+        case'd':if (p->rect_player.x <= window_width - p->rect_player.w) { p->rect_player.x += speed_x; }move_j = 2; move_i = 5;break;
+        case SDLK_UP:if (p->rect_player.y >= 0) { p->rect_player.y -= speed_y; }move_j = 0; move_i = 5; break;
+        case SDLK_LEFT:if (p->rect_player.x >= 0) { p->rect_player.x -= speed_x; }move_j = 1; move_i = 5; break;
+        case SDLK_DOWN:if (p->rect_player.y <= window_hight - p->rect_player.h) { p->rect_player.y += speed_y; }move_j = 0; move_i = 5; break;
+        case SDLK_RIGHT:if (p->rect_player.x <= window_width - p->rect_player.w) { p->rect_player.x += speed_x; }move_j = 2; move_i = 5; break;
+        default:move_j = 0; move_i = 5; break;
         }
+    else{
+        move_j = 0; move_i = 5;
+    }
 }//控制人物移动

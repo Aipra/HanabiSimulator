@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) Uquit = 0;
             fly_player_update(rend,event,&players);
+            break;
         }
     }
 
