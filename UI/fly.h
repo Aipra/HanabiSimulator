@@ -1,17 +1,18 @@
 /*
-* Ö÷ÒªÊÇÎªÁËÐ´µÐ»ú£¨bossºÍmobs£©·û¿¨£¨card£©»¹ÓÐ×Ô»ú£¨player£©
-* µÄÒ»Ð©½á¹¹Ìå£¨²ÎÊý£©¼°º¯Êý
+* ï¿½ï¿½Òªï¿½ï¿½Îªï¿½ï¿½Ð´ï¿½Ð»ï¿½ï¿½ï¿½bossï¿½ï¿½mobsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½cardï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½playerï¿½ï¿½
+* ï¿½ï¿½Ò»Ð©ï¿½á¹¹ï¿½å£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 
 
 #ifndef _FLY_
 #define _FLY_
-#include <SDL_image.h>
-#include <SDL.h>
+#include "SDL2/SDL_image.h"
+#include "SDL/SDL.h"
+
 extern struct player {
-	SDL_Rect rect_player;//ÈËÎïµÄ³õÊ¼Î»ÖÃ
-	SDL_Rect rect_back[3][8];//3Îª×óÓÒÔË¶¯£¬8Îª8ÖÖ×´Ì¬
-	SDL_Texture* er;//ÈËÎïÔìÐÍ£¬Íâ²¿×ªTextureÓÃ
+	SDL_Rect rect_player;//ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Ê¼Î»ï¿½ï¿½
+	SDL_Rect rect_back[3][8];//3Îªï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½8Îª8ï¿½ï¿½×´Ì¬
+	SDL_Texture* er;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½â²¿×ªTextureï¿½ï¿½
 }player;
 #define speed_x 10
 #define speed_y 10

@@ -1,28 +1,26 @@
 /*
  * @file Hello.c
- * @author ChiHeShui
+ * @author Team ChiHeShui
  * @brief CHS
- * @version 0.0.0.1
- * @date 2020-12-09
+ * @version Alpha 0.1
+ * @date 2020-12-29
  *
  * @copyright Copyright (c) 2020
  *
  */
 
 
-#include <stdio.h>
-#include <SDL_image.h>
-#include <SDL.h>
-#include "./include/surface.h"
-#include "./include/fly.h"
-#include "./include/win.h"
-#include "./include/judge.h"
+#include "stdio.h"
+#include "surface.h"
+#include "fly.h"
+#include "win.h"
+#include "judge.h"
 
 int main(int argc, char* argv[])
 {
 
     if(SDL_Init(SDL_INIT_VIDEO)<0)
-        printf("SDL³õÊ¼»¯Ê§°Ü£¬´íÎóÂë-1");
+        printf("SDLï¿½ï¿½Ê¼ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1");
 
     SDL_Window* window;
     SDL_Renderer* rend;

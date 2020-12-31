@@ -1,8 +1,6 @@
-#include "./include/fly.h"
-#include "./include/win.h"
-#include <SDL.h>
-#include <stdio.h>
-#include <SDL_image.h>
+#include "fly.h"
+#include "win.h"
+#include "stdio.h"
 
 //定义人物的图片地址
 char* player_image[100] = { "./res/a1.png","./res/a2.png","./res/a3.png" };
