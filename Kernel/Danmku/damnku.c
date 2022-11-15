@@ -11,16 +11,16 @@
 
 
 #include "stdio.h"
-#include "surface.h"
-#include "fly.h"
-#include "win.h"
+#include "Window/surface.h"
+#include "entry/fly.h"
+#include "Window/win.h"
 #include "judge.h"
 
 int main(int argc, char* argv[])
 {
 
     if(SDL_Init(SDL_INIT_VIDEO)<0)
-        printf("SDL��ʼ��ʧ�ܣ�������-1");
+        printf("SDL Init Failed! Fail code:");
 
     SDL_Window* window;
     SDL_Renderer* rend;
@@ -48,7 +48,6 @@ int main(int argc, char* argv[])
             break;
         }
     }
-
 
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(window);

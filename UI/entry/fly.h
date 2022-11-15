@@ -6,10 +6,10 @@
 
 #ifndef _FLY_
 #define _FLY_
-#include "SDL2/SDL_image.h"
-#include "SDL/SDL.h"
+#include "SDL_image.h"
+#include "SDL.h"
 
-extern struct player {
+static struct player {
 	SDL_Rect rect_player;//����ĳ�ʼλ��
 	SDL_Rect rect_back[3][8];//3Ϊ�����˶���8Ϊ8��״̬
 	SDL_Texture* er;//�������ͣ��ⲿתTexture��
