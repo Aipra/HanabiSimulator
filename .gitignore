@@ -46,7 +46,7 @@
 *.mod*
 *.cmd
 
-# Custom ignore files
-/.vscode/
-/build/
-/3rd/
+# Project dependencies / environment
+.vscode/
+build/
+bin/
