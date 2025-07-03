@@ -10,15 +10,17 @@ project(HanabiSimulator
         DESCRIPTION "HanabiSimulator project success!"
         LANGUAGES CXX)
 # 设置C++标准
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 # 包含头文件
 set(KERNEL_DIR ${PROJECT_SOURCE_DIR}/Kernel)
 set(UI_DIR ${PROJECT_SOURCE_DIR}/UI)
 include_directories(${KERNEL_DIR})
 include_directories(${UI_DIR})
 set(SOURCE
-        Kernel/Logical/logic.cpp
-        UI/Window/window.cpp)
+        Kernel/Bullet.cpp
+        Kernel/Player.cpp
+        Kernel/DanmakuInterpreter.cpp
+        Kernel/SpellCard.cpp)
 
 # 设置条件控制语句
 if(WIN32)
@@ -31,21 +33,27 @@ if(WIN32)
     add_executable(${PROJECT_NAME} ${REDSRC} ${SOURCE} main.cpp)
     # 添加动态链接库x64
     # 5. 链接 glfw 库
-    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw)
+    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw sol2)
 
 elseif(APPLE)
     # macOS系统下的编译方案
     # 添加子模块glfw，并构建为静态链接库
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glad)
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glfw)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/sol2)
     
     # 添加可执行文件
     add_executable(${PROJECT_NAME} ${SOURCE} main.cpp)
     
+    find_package(Lua REQUIRED)
+    include_directories(/opt/homebrew/include/lua)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${LUA_LIBRARIES})
+
     # 链接 glfw 库和macOS系统库
-    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw)
+    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw sol2)
     
     # macOS特定的系统库
+
     find_library(COCOA_LIBRARY Cocoa)
     find_library(IOKIT_LIBRARY IOKit)
     find_library(COREVIDEO_LIBRARY CoreVideo)

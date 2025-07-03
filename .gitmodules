@@ -6,3 +6,7 @@
 	path = third_party/glad
 	url = https://github.com/Dav1dde/glad.git
 	branch = master
+[submodule "third_party/sol2"]
+	path = third_party/sol2
+	url = https://github.com/ThePhD/sol2.git
+	branch = develop
