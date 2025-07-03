@@ -12,6 +12,8 @@ project(HanabiSimulator
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 17)
 
+
+
 # 全局包含头文件
 include_directories(${PROJECT_SOURCE_DIR}/third_party/glad/include)
 include_directories(${PROJECT_SOURCE_DIR}/third_party/glfw/include)
@@ -102,6 +104,10 @@ elseif(APPLE)
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/macos/)
 else()
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/linux/)
+endif()
+
+if(MSVC)
+    target_compile_options(HanabiSimulator PRIVATE /utf-8)
 endif()
 
 target_sources(HanabiSimulator PRIVATE

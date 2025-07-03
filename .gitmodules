@@ -14,3 +14,7 @@
 	path = third_party/imgui
 	url = https://github.com/ocornut/imgui.git
 
+[submodule "third_party/lua"]
+	path = third_party/lua
+	url = https://github.com/lua/lua.git
+	branch = v5.4

@@ -528,21 +528,23 @@ void Game::helpUI() {
 }
 
 std::string Game::getExecutableDir() {
-    char buf[PATH_MAX];
 #if defined(__APPLE__)
+    char buf[PATH_MAX];
     uint32_t size = sizeof(buf);
     if (_NSGetExecutablePath(buf, &size) == 0) {
         return std::filesystem::path(buf).parent_path().string();
     }
 #elif defined(__linux__)
+    char buf[PATH_MAX];
     ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
     if (count != -1) {
         return std::filesystem::path(std::string(buf, count)).parent_path().string();
     }
 #elif defined(_WIN32)
-    DWORD size = GetModuleFileNameA(NULL, buf, PATH_MAX);
-    if (size > 0 && size < PATH_MAX) {
-        return std::filesystem::path(std::string(buf, size)).parent_path().string();
+    char buf[MAX_PATH];
+    DWORD size = GetModuleFileNameA(NULL, buf, MAX_PATH);
+    if (size > 0 && size < MAX_PATH) {
+        return std::filesystem::path(std::string(buf, static_cast<size_t>(size))).parent_path().string();
     }
 #endif
     return std::filesystem::current_path().string();
