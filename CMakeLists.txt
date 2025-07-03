@@ -45,8 +45,45 @@ if(APPLE)
 elseif(WIN32)
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glad)
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glfw)
+    # 集成 Lua 源码为静态库
+    set(LUA_SRC
+        third_party/lua/lapi.c
+        third_party/lua/lcode.c
+        third_party/lua/lctype.c
+        third_party/lua/ldebug.c
+        third_party/lua/ldo.c
+        third_party/lua/ldump.c
+        third_party/lua/lfunc.c
+        third_party/lua/lgc.c
+        third_party/lua/llex.c
+        third_party/lua/lmem.c
+        third_party/lua/lobject.c
+        third_party/lua/lopcodes.c
+        third_party/lua/lparser.c
+        third_party/lua/lstate.c
+        third_party/lua/lstring.c
+        third_party/lua/ltable.c
+        third_party/lua/ltm.c
+        third_party/lua/lundump.c
+        third_party/lua/lvm.c
+        third_party/lua/lzio.c
+        third_party/lua/lauxlib.c
+        third_party/lua/lbaselib.c
+        third_party/lua/lcorolib.c
+        third_party/lua/ldblib.c
+        third_party/lua/liolib.c
+        third_party/lua/lmathlib.c
+        third_party/lua/loslib.c
+        third_party/lua/lstrlib.c
+        third_party/lua/ltablib.c
+        third_party/lua/lutf8lib.c
+        third_party/lua/loadlib.c
+        third_party/lua/linit.c
+    )
+    add_library(lua STATIC ${LUA_SRC})
+    target_include_directories(lua PUBLIC ${PROJECT_SOURCE_DIR}/third_party/lua)
     add_executable(${PROJECT_NAME} ${SOURCE} main.cpp)
-    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw)
+    target_link_libraries(${PROJECT_NAME} PRIVATE glad glfw lua)
 elseif(UNIX)
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glad)
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/glfw)
