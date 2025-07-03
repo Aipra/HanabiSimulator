@@ -1,8 +1,7 @@
 #include <iostream>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "Window/window.hpp"
-#include "Logical/logical.hpp"
+#include <cmath>
 
 int main(int argc, char* argv[]);
 // 注册一个回调函数，设置改变原视口的大小
@@ -29,16 +28,34 @@ int main(int argc, char* argv[])
         glfwTerminate();
         return -1;
     }
+    
+    // 获取主显示器
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    
+    // 计算窗口居中位置
+    int windowX = (mode->width - 800) / 2;
+    int windowY = (mode->height - 600) / 2;
+    
+    // 设置窗口位置
+    glfwSetWindowPos(window, windowX, windowY);
+    
     // 设置当前线程的上下文
     glfwMakeContextCurrent(window);
+    // 开启垂直同步，保证60Hz
+    glfwSwapInterval(1);
     //调用glfw函数之前，初始化glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    // 获取窗口的实际大小
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    
     // 设置opengl渲染视口的大小
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, width, height);
     // 注册函数，设置当调整大小的时候调用这个回调函数
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -85,12 +102,14 @@ int main(int argc, char* argv[])
 
     // 设置着色器程序
     // 设置顶点着色器
-    const char *vertexShaderSource = "#version 330 core\n" // 设置着色器版本
-                                     "layout (location = 0) in vec3 aPos;\n" // 设置输入的格式
+    const char *vertexShaderSource = "#version 330 core\n"
+                                     "layout (location = 0) in vec3 aPos;\n"
+                                     "uniform mat4 rotation;\n"
                                      "void main()\n"
                                      "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n" // 设置输出（gl_Position）的值
+                                     "   gl_Position = rotation * vec4(aPos, 1.0);\n"
                                      "}\0";
+    
     // 创建顶点着色器
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -121,6 +140,9 @@ int main(int argc, char* argv[])
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
 
+    // 获取旋转矩阵uniform的位置
+    int rotationLoc = glGetUniformLocation(shaderProgram, "rotation");
+
     // 删除无用的子着色器程序
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -128,27 +150,49 @@ int main(int argc, char* argv[])
     // 仅绘制三角形的边
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    // 旋转角度变量
+    float angle = 0.0f;
+    // 旋转速度（弧度/秒）
+    float rotateSpeed = 2.0f; // 可调整转速
+    float lastTime = glfwGetTime();
+
     // 设置渲染循环，在点击退出之前一直绘制窗口
     while(!glfwWindowShouldClose(window))
     {
-
         // 检测是否有按键被按下(输入)
         processInput(window);
         // 检测窗口中的事件
         glfwPollEvents();
         // 设置清空屏幕使用的颜色
-
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         // 设置清空屏幕
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // 渲染
-        // 设置要使用的着色器程序
+        // 计算帧间隔
+        float currentTime = glfwGetTime();
+        float deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        // 检查键盘输入，控制旋转角度
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+            angle += rotateSpeed * deltaTime;
+        }
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+            angle -= rotateSpeed * deltaTime;
+        }
+
+        // 构造旋转矩阵
+        float rotation[16] = {
+            cos(angle), -sin(angle), 0.0f, 0.0f,
+            sin(angle),  cos(angle), 0.0f, 0.0f,
+            0.0f,        0.0f,      1.0f, 0.0f,
+            0.0f,        0.0f,      0.0f, 1.0f
+        };
         glUseProgram(shaderProgram);
+        glUniformMatrix4fv(rotationLoc, 1, GL_FALSE, rotation);
         // 设置绑定的顶点数组对象
         glBindVertexArray(VAO);
         // 绘制三角形
-//        glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         // 绘制窗口中的每一个像素
