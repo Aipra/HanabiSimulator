@@ -10,3 +10,6 @@
 	path = third_party/sol2
 	url = https://github.com/ThePhD/sol2.git
 	branch = develop
+[submodule "third_party/imgui"]
+	path = third_party/imgui
+	url = https://github.com/ocornut/imgui.git

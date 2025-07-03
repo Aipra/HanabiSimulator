@@ -43,5 +43,7 @@ void Player::draw() {
     for (auto& b : bullets) b.draw();
 }
 
+
 float Player::getX() const { return x; }
 float Player::getY() const { return y; }
+std::vector<Bullet>& Player::getBullets() { return bullets; }

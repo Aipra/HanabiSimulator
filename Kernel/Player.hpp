@@ -13,6 +13,7 @@ public:
     void draw();
     float getX() const;
     float getY() const;
+    std::vector<Bullet>& getBullets();
 private:
     float x, y;
     int* winWidth;

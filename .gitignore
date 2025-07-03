@@ -50,3 +50,5 @@
 .vscode/
 build/
 bin/
+.cache/
+*.ini
